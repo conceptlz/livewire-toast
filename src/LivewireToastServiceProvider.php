@@ -1,9 +1,9 @@
 <?php
 
-namespace Ascsoftw\LivewireToast;
+namespace Conceptlz\LivewireToast;
 
 use Illuminate\Support\ServiceProvider;
-use Ascsoftw\LivewireToast\Http\Livewire\LivewireToast;
+use Conceptlz\LivewireToast\Http\Livewire\LivewireToast;
 use Livewire\Livewire;
 
 class LivewireToastServiceProvider extends ServiceProvider

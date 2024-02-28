@@ -1,5 +1,5 @@
 # livewire-toast
-Livewire Package to display Toast Notification based on TALL Stack.
+Livewire v3 Package to display Toast Notification based on TALL Stack.
 
 <p align="center">
   <img src="https://media.giphy.com/media/P1aEuZq9kSok2RIfJC/giphy.gif">
@@ -18,7 +18,7 @@ Make sure that [AlpineJS](https://github.com/alpinejs/alpine/) is installed prop
 You can install the Package using Composer
 
 ```bash
-composer require ascsoftw/livewire-toast
+composer require conceptlz/livewire-toast
 ```
 
 ## Usage
@@ -99,7 +99,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## Credits
 
-- [AscSoftwares](http://www.ascsoftwares.com)
+- [Conceptualize](http://www.conceptualize.ae)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

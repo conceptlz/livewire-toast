@@ -1,6 +1,6 @@
 <?php
 
-namespace Ascsoftw\LivewireToast\Http\Livewire;
+namespace Conceptlz\LivewireToast\Http\Livewire;
 
 use Livewire\Component;
 
@@ -29,60 +29,77 @@ class LivewireToast extends Component
 
     public function mount()
     {
-        if($message = session('livewire-toast')) {
+        $this->_setType();
+        $this->_setDuration();
+        $this->_setBackgroundColor();
+        $this->_setTextColor();
+        $this->_setPosition();
+        $this->_setIcon();
+        $this->_setClickHandler();
+        $this->_setTransition();
+
+        if ($message = session('livewire-toast')) {
             $this->show($message);
         }
     }
 
     public function show($params)
     {
+        $this->_setDuration();
         $type = '';
         if (is_array($params)) {
+            info('toast', $params);
             $this->message = $params['message'] ?? '';
             $type = $params['type'] ?? '';
+            $this->duration = $params['duration'] ?? $this->duration;
         } else {
             $this->message = $params;
         }
         $this->_setType($type);
+
+        $this->_setBackgroundColor();
+        $this->_setTextColor();
+        $this->_setIcon();
+
+        if (!empty($this->message)) {
+            $this->dispatch('new-toast');
+        }
     }
 
-    public function showWarning($message)
+    public function showWarning(string $message, int $duration = null)
     {
-        $this->message = $message;
-        $this->_setType('warning');
+        $this->show([
+            'type' => 'warning',
+            ...get_defined_vars(),
+        ]);
     }
 
-    public function showInfo($message)
+    public function showInfo(string $message, int $duration = null)
     {
-        $this->message = $message;
-        $this->_setType('info');
+        $this->show([
+            'type' => 'info',
+            ...get_defined_vars(),
+        ]);
     }
 
-    public function showError($message)
+    public function showError(string $message, int $duration = null)
     {
-        $this->message = $message;
-        $this->_setType('error');
+        $this->show([
+            'type' => 'error',
+            ...get_defined_vars(),
+        ]);
     }
 
-    public function showSuccess($message)
+    public function showSuccess(string $message, int $duration = null)
     {
-        $this->message = $message;
-        $this->_setType('success');
+        $this->show([
+            'type' => 'success',
+            ...get_defined_vars(),
+        ]);
     }
 
     public function render()
     {
-        $this->_setBackgroundColor();
-        $this->_setTextColor();
-        $this->_setPosition();
-        $this->_setDuration();
-        $this->_setIcon();
-        $this->_setClickHandler();
-        $this->_setTransition();
-        
-        if (!empty($this->message)) {
-            $this->dispatchBrowserEvent('new-toast');
-        }
         return view('livewire-toast::livewire.livewire-toast');
     }
 
@@ -130,25 +147,25 @@ class LivewireToast extends Component
 
     private function _setIcon()
     {
-        $this->showIcon = (boolean)config('livewire-toast.show_icon');
+        $this->showIcon = (bool)config('livewire-toast.show_icon');
     }
 
     private function _setClickHandler()
     {
-        $this->hideOnClick = (boolean)config('livewire-toast.hide_on_click');
+        $this->hideOnClick = (bool)config('livewire-toast.hide_on_click');
     }
 
     private function _setTransition()
     {
-        $this->transition = (boolean)config('livewire-toast.transition');
+        $this->transition = (bool)config('livewire-toast.transition');
         if ($this->transition) {
             $this->transitioClasses['leave_end_class'] =
-            $this->transitioClasses['enter_start_class'] =
-            reset($this->transitions[config('livewire-toast.transition_type')]);
+                $this->transitioClasses['enter_start_class'] =
+                reset($this->transitions[config('livewire-toast.transition_type')]);
 
             $this->transitioClasses['leave_start_class'] =
-            $this->transitioClasses['enter_end_class'] =
-            end($this->transitions[config('livewire-toast.transition_type')]);
+                $this->transitioClasses['enter_end_class'] =
+                end($this->transitions[config('livewire-toast.transition_type')]);
         }
     }
 }
